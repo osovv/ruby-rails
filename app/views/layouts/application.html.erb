@@ -1,16 +1,42 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>RubyRailsPostgres</title>
+    <title>db-lab</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <link rel="stylesheet" href="https://cdn.simplecss.org/simple-v1.css">
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
-    <%= yield %>
+  <body style="max-width: 100vw">
+    <header>
+      <nav>
+        <a href="/factories"> Factories </a>
+        <a href="/departments"> Departments </a>
+        <a href="/technologies"> Technologies </a>
+        <a href="/products"> Products </a>
+        <a href="/parts"> Parts </a>
+        <a href="/vendors"> Vendors </a>
+      </nav>
+
+      <% if user_signed_in? %>
+        <%= button_to 'Sign out', destroy_user_session_path, method: :delete %>
+      <% else %>
+        <%= button_to 'Sign in', new_user_session_path, method: :get %>
+      <% end %>
+    </header>
+
+    <main style="min-width: 90vw; max-width: 90vw; margin: 0 auto">
+      <% flash.each do |type, msg| %>
+        <div class="alert <%= flash_class(type) %>">
+          <%= msg %>
+        </div>
+      <% end %>
+
+      <%= yield %>
+    </main>
   </body>
 </html>
